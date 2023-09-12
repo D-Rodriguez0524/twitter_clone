@@ -1,0 +1,15 @@
+How is the logged-in user being kept track of?
+
+The logged-in user is being tracked through Flask's session mechanism. In many web applications, when a user logs in, their identity is stored in a session, which is a way to persist data across multiple HTTP requests. The CURR_USER_KEY (which is not shown in your code snippet) is likely a constant or string that represents the key under which the user's identity (e.g., user ID or username) is stored in the session. When a user logs in, their user identifier is typically set in the session, and when they log out or their session expires, it is removed.
+
+What is Flask’s g object?
+
+Flask's g object is a global context object provided by Flask. It allows you to store and access data that is specific to the current request context. The g object is unique to each request and is often used to share data between various parts of a Flask application during the processing of a request. It's a convenient way to pass information between middleware, before_request functions, and view functions without having to explicitly pass it as an argument.
+
+What is the purpose of add_user_to_g?
+
+The purpose of the add_user_to_g function is to add information about the currently logged-in user (if there is one) to Flask's global context (g). This information can then be accessed by other parts of the application during the processing of the request. It is a common practice in web applications to make user-related data (e.g., user objects) available throughout the request handling process, and add_user_to_g accomplishes this by checking the session for a user identifier and loading the corresponding user object from the database.
+
+What does @app.before_request mean?
+
+@app.before_request is a decorator in Flask that allows you to register a function to be executed before each incoming HTTP request is handled by a view function. When you decorate a function with @app.before_request, it means that the function (in this case, add_user_to_g) will run as a "pre-processing" step for every request before the view function associated with that request is called. This is a powerful mechanism in Flask for performing common tasks, such as user authentication, setting up database connections, or adding context data, before the main logic of a view function is executed.
